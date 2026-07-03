@@ -1,4 +1,4 @@
-package searlelab.encyclopediana.context;
+package org.searlelab.contextguide.mprophet;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class ContextWindowExtractor {
 //		}
 	}
 	
-	public static StripeFile maskByTargetWindows(File rawFilePath,  String outputPath, IsolationWindows isolationWindows) throws IOException {
+	public static StripeFile maskByTargetWindows(File rawFilePath,  String outputPath, IsolationWindow isolationWindows) throws IOException {
 		long startTime = System.nanoTime();
 		
 		// Open the masked File

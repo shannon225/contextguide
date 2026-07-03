@@ -6,6 +6,16 @@ target/
 .project
 .settings/
 
+# Packaged Java artifacts
+*.jar
+*.war
+*.ear
+
+# Eclipse / Java temporary files
+*.tmp
+*.bak
+*.swp
+
 # IntelliJ, if ever used
 .idea/
 *.iml
@@ -23,3 +33,6 @@ Thumbs.db
 # Logs
 *.log
 
+# Local environment/config files
+.env
+*.local

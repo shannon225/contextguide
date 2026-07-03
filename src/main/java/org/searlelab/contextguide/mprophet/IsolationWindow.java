@@ -1,6 +1,6 @@
-package searlelab.encyclopediana.context;
+package org.searlelab.contextguide.mprophet;
 
-public class IsolationWindows {
+public class IsolationWindow {
 	private double targetMz;
 	private double mzStart;
 	private double mzStop; 
@@ -9,10 +9,12 @@ public class IsolationWindows {
 	private float rtMin;
 	private float rtMax;
 	private boolean isDecoy;
+	private String compound;
+	private byte charge;
 
 	
 	// Constructor
-	public IsolationWindows(double precursorMz, float rtInSecondsStart, float rtInSecondsStop, boolean isDecoy) {
+	public IsolationWindow(double precursorMz, float rtInSecondsStart, float rtInSecondsStop, boolean isDecoy) {
 		this.targetMz = precursorMz;
 		this.rtMin = rtInSecondsStart;
 		this.rtMax = rtInSecondsStop;
@@ -50,6 +52,14 @@ public class IsolationWindows {
 	
 	public boolean isDecoy() {
 		return isDecoy;
+	}
+
+	public String getCompound() {
+		return compound;
+	}
+
+	public byte getCharge() {
+		return charge;
 	}
 
 }
