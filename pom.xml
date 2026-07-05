@@ -14,5 +14,20 @@
   		<artifactId>encyclopedia</artifactId>
   		<version>6.6.24</version>
   	</dependency>
+	<dependency>
+			<groupId>org.searlelab</groupId>
+			<artifactId>jchronologer</artifactId>
+			<version>1.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.searlelab</groupId>
+			<artifactId>javapot</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.searlelab</groupId>
+			<artifactId>msrawjava-core</artifactId>
+			<version>26.7.1</version>
+		</dependency>
   </dependencies>
 </project>
