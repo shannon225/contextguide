@@ -15,17 +15,18 @@ import java.util.Map.Entry;
 import org.searlelab.contextguide.mprophet.IsolationWindow;
 
 import edu.washington.gs.maccoss.encyclopedia.datastructures.AminoAcidConstants;
-import edu.washington.gs.maccoss.encyclopedia.datastructures.FragmentScan;
 import edu.washington.gs.maccoss.encyclopedia.datastructures.LibraryEntry;
-import edu.washington.gs.maccoss.encyclopedia.datastructures.PrecursorScan;
-import edu.washington.gs.maccoss.encyclopedia.datastructures.Range;
 import edu.washington.gs.maccoss.encyclopedia.datastructures.SearchParameters;
 import edu.washington.gs.maccoss.encyclopedia.filereaders.LibraryFile;
 import edu.washington.gs.maccoss.encyclopedia.filereaders.PecanParameterParser;
-import edu.washington.gs.maccoss.encyclopedia.filereaders.StripeFile;
-import edu.washington.gs.maccoss.encyclopedia.filereaders.WindowData;
 import edu.washington.gs.maccoss.encyclopedia.utils.massspec.PeptideUtils;
 import edu.washington.gs.maccoss.encyclopedia.utils.math.RandomGenerator;
+
+import org.searlelab.msrawjava.model.FragmentScan;
+import org.searlelab.msrawjava.model.PrecursorScan;
+import org.searlelab.msrawjava.model.Range;
+import org.searlelab.msrawjava.model.WindowData;
+import org.searlelab.msrawjava.io.encyclopedia.EncyclopeDIAFile;
 
 public class TargetedBootstrapper {
 
@@ -73,7 +74,7 @@ public class TargetedBootstrapper {
 			Path outputPath = rawFile.getParent().resolve(baseName + "_masked" + i + "_assay.dia");
 			Path maskedAssayOutputPath = rawFile.getParent().resolve(baseName + "_masked" + i + "_assay.txt");
 
-			StripeFile maskedFile = writeMaskedFile(isolationWindows, i, rawFilePath, outputPath, halfWindowWidthMz);
+			EncyclopeDIAFile maskedFile = writeMaskedFile(isolationWindows, i, rawFilePath, outputPath, halfWindowWidthMz);
 			writeAssayList(isolationWindows, maskedAssayOutputPath);
 
 			System.out.println("Complete! The masked file " + maskedFile + i + " was made.\n");
@@ -171,15 +172,15 @@ public class TargetedBootstrapper {
 
 	// Second function - Uses the IsolationWindow List to mask the raw data
 	@SuppressWarnings("unused")
-	public static StripeFile writeMaskedFile(ArrayList<IsolationWindow> isolationWindows, int i, String diaFilePath,
+	public static EncyclopeDIAFile writeMaskedFile(ArrayList<IsolationWindow> isolationWindows, int i, String diaFilePath,
 			Path outputPath, double halfWindowWidthMz) throws Throwable {
 
 		// START TIMER 2
 		long startTime = System.nanoTime();
 
 		File rawFile = new File(diaFilePath);
-		StripeFile maskedFile = new StripeFile(false);
-		StripeFile rawLibraryFile = new StripeFile(false);
+		EncyclopeDIAFile maskedFile = new EncyclopeDIAFile();
+		EncyclopeDIAFile rawLibraryFile = new EncyclopeDIAFile();
 		File outputFile = outputPath.toFile();
 
 		HashSet<Integer> addedPrecursors = new HashSet<>();
@@ -204,7 +205,7 @@ public class TargetedBootstrapper {
 				double mzStop = windowMz + halfWindowWidthMz;
 				Range mzRange = new Range(mzStart, mzStop);
 
-				ArrayList<FragmentScan> fragmentScansFromWindow = rawLibraryFile.getStripes(windowMz, windowStartTime,
+				ArrayList<org.searlelab.msrawjava.model.FragmentScan> fragmentScansFromWindow = rawLibraryFile.getStripes(windowMz, windowStartTime,
 						windowStopTime, sqrt);
 				ArrayList<FragmentScan> matchingScans = new ArrayList<>();
 
