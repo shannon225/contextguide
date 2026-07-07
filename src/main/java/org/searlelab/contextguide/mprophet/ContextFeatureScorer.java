@@ -22,9 +22,13 @@ import edu.washington.gs.maccoss.encyclopedia.datastructures.SearchParameters;
 import edu.washington.gs.maccoss.encyclopedia.filereaders.BlibToLibraryConverter;
 import edu.washington.gs.maccoss.encyclopedia.filereaders.LibraryInterface;
 import edu.washington.gs.maccoss.encyclopedia.filereaders.SearchParameterParser;
-import edu.washington.gs.maccoss.encyclopedia.filereaders.StripeFileInterface;
+//import edu.washington.gs.maccoss.encyclopedia.filereaders.StripeFileInterface;
 import edu.washington.gs.maccoss.encyclopedia.utils.threading.EmptyProgressIndicator;
 import edu.washington.gs.maccoss.encyclopedia.utils.threading.ProgressIndicator;
+
+import org.searlelab.msrawjava.io.StripeFileInterface;
+import org.searlelab.context.encyclopedia.EncyclopediaTwo;
+import org.searlelab.context.encyclopedia.SearchToBLIB;
 
 public class ContextFeatureScorer {
 
@@ -112,7 +116,7 @@ public class ContextFeatureScorer {
 				interfaceForLibrary, rawFile, scoringForLibrary);
 
 		ProgressIndicator progress = new EmptyProgressIndicator(true);
-		StripeFileInterface interfaceForStripeFile = job.getDiaFileReader();
+		org.searlelab.msrawjava.io.StripeFileInterface interfaceForStripeFile = job.getDiaFileReader();
 
 		// Run Encyclopedia job to get the feature file
 		File featuresToSplit = job.getPercolatorFiles().getInputTSV();
