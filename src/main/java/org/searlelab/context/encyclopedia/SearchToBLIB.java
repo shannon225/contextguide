@@ -44,7 +44,7 @@ import edu.washington.gs.maccoss.encyclopedia.ProgramType;
 import edu.washington.gs.maccoss.encyclopedia.ScribeTwo;
 import edu.washington.gs.maccoss.encyclopedia.SearchGUIMain;
 import edu.washington.gs.maccoss.encyclopedia.XCorDIA;
-import edu.washington.gs.maccoss.encyclopedia.SearchToBLIB.OutputFormat;
+//import edu.washington.gs.maccoss.encyclopedia.SearchToBLIB.OutputFormat;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.ModificationLocalizationData;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.ParsimonyProteinGrouper;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.ParsimonyProteinGrouper.PickedProteinFDRResult;
@@ -67,7 +67,7 @@ import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetExec
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetReiter;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetResult;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.PercolatorExecutionData;
-import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.PercolatorExecutor;
+//import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.PercolatorExecutor;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.PercolatorPeptide;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.PercolatorProteinGroup;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.phospho.LocalizationDataToTSVConsumer;
@@ -715,10 +715,10 @@ public class SearchToBLIB {
 	 * @param progress A progress indicator that will be used during the conversion process
 	 * @param origPecanJobs The jobs whose results should be included in the output file
 	 * @param libFile The location where the new library will be created (will be overwritten if it exists)
-	 * @param outputFormat The format which should be written
+	 * @param elib The format which should be written
 	 * @param alignBetweenFiles If RT alignment
 	 */
-	public static void convert(ProgressIndicator progress, List<? extends SearchJobData> origPecanJobs, File libFile, Enum<OutputFormat> outputFormat, boolean alignBetweenFiles, SearchParameters parameters) {
+	public static void convert(ProgressIndicator progress, List<? extends SearchJobData> origPecanJobs, File libFile, Enum<OutputFormat> elib, boolean alignBetweenFiles, SearchParameters parameters) {
 		ArrayList<SearchJobData> preprocessedPecanJobs=OverlappingDiaPreprocessor.preprocess(progress, new ArrayList<SearchJobData>(origPecanJobs));
 		List<? extends SearchJobData> pecanJobs = getProcessedJobs(preprocessedPecanJobs);
 		if (pecanJobs.size()==0) {
@@ -800,7 +800,7 @@ public class SearchToBLIB {
 			if (!foundLibrary) {
 				Optional<PercolatorExecutionData> globalPercolatorFiles = Optional.ofNullable(featureFiles.size() == 1 ? null : bigPercolatorFiles);
 
-				quantifySamples(progress, pecanJobs, libFile, outputFormat, alignBetweenFiles, parameters, percolatorDataPair.x, globalPercolatorFiles, integratePrecursors);
+				quantifySamples(progress, pecanJobs, libFile, elib, alignBetweenFiles, parameters, percolatorDataPair.x, globalPercolatorFiles, integratePrecursors);
 			}
 			progress.update(percolatorDataPair.x.x.size()+" peptides identified at "+(threshold*100.0f)+"% FDR", 1.0f);
 		} catch (IOException ioe) {
@@ -900,7 +900,7 @@ public class SearchToBLIB {
 	}
 
 	private static void quantifySamples(ProgressIndicator progress, List<? extends SearchJobData> pecanJobs,
-										File libFile, OutputFormat outputFormat, boolean alignBetweenFiles, SearchParameters parameters,
+										File libFile, Enum<OutputFormat> elib, boolean alignBetweenFiles, SearchParameters parameters,
 										Pair<ArrayList<PercolatorPeptide>, Float> passingPeptides,
 										Optional<PercolatorExecutionData> globalPercolatorFiles, boolean integratePrecursors) {
 		Optional<PeakLocationInferrerInterface> inferrer;
@@ -919,7 +919,7 @@ public class SearchToBLIB {
 			inferrer=Optional.empty();
 		}
 
-		outputFormat.convert(progress, pecanJobs, libFile, passingPeptides, globalPercolatorFiles, inferrer, parameters, integratePrecursors);
+		((OutputFormat) elib).convert(progress, pecanJobs, libFile, passingPeptides, globalPercolatorFiles, inferrer, parameters, integratePrecursors);
 	}
 
 	private static Pair<Pair<ArrayList<PercolatorPeptide>, Float>, Pair<ArrayList<PercolatorPeptide>, Float>> getPeptidesWithoutGlobalFDR(List<? extends SearchJobData> pecanJobs, SearchParameters parameters) {

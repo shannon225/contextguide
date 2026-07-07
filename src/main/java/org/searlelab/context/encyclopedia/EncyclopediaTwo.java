@@ -29,6 +29,7 @@ import org.searlelab.msrawjava.model.Range;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import org.searlelab.context.encyclopedia.SearchToBLIB;
+import org.searlelab.context.encyclopedia.SearchToBLIB.OutputFormat;
 
 import edu.washington.gs.maccoss.encyclopedia.CLIConverter;
 import edu.washington.gs.maccoss.encyclopedia.DIABrowser;
@@ -36,7 +37,7 @@ import edu.washington.gs.maccoss.encyclopedia.ProgramType;
 import edu.washington.gs.maccoss.encyclopedia.Scribe;
 import edu.washington.gs.maccoss.encyclopedia.SearchGUIMain;
 //import edu.washington.gs.maccoss.encyclopedia.SearchToBLIB;
-import edu.washington.gs.maccoss.encyclopedia.SearchToBLIB.OutputFormat;
+//import edu.washington.gs.maccoss.encyclopedia.SearchToBLIB.OutputFormat;
 import edu.washington.gs.maccoss.encyclopedia.Thesaurus;
 import edu.washington.gs.maccoss.encyclopedia.Walnut;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.AbstractScoringResult;
@@ -324,7 +325,7 @@ public class EncyclopediaTwo {
 		Logger.logLine(""); 
 	}
 
-	static PSMConsumer generateFeatureFile(ProgressIndicator progress, LibraryInterface library, EncyclopediaTwoJobData job, StripeFileInterface stripefile, Optional<Pair<MProphetResult, TargeteDecoyPSMFilter>> prelimAnalysis) throws IOException, SQLException, DataFormatException, InterruptedException {
+	public static PSMConsumer generateFeatureFile(ProgressIndicator progress, LibraryInterface library, EncyclopediaTwoJobData job, StripeFileInterface stripefile, Optional<Pair<MProphetResult, TargeteDecoyPSMFilter>> prelimAnalysis) throws IOException, SQLException, DataFormatException, InterruptedException {
 
 		LibraryScoringFactory taskFactory=job.getTaskFactory();
 		SearchParameters parameters=taskFactory.getParameters();

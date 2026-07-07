@@ -14,7 +14,7 @@ import java.util.zip.DataFormatException;
 
 import org.searlelab.contextguide.io.IsolationWindowReader;
 
-import edu.washington.gs.maccoss.encyclopedia.EncyclopediaTwo;
+//import edu.washington.gs.maccoss.encyclopedia.EncyclopediaTwo;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.EncyclopediaScoringFactory;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.EncyclopediaTwoJobData;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.LibraryScoringFactory;
