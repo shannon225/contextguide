@@ -22,7 +22,7 @@ public class IsolationWindow {
 		this.isDecoy = isDecoy;
 		}
 	
-	// Isolation window as mass list
+	// Isolation window as mass list with peptide and charge state
 	public IsolationWindow(String peptide, double precursorMz, byte charge, float rtMin, float rtMax, boolean isDecoy) {
 		this.peptide = peptide;
 		this.targetMz = precursorMz;
