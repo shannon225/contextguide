@@ -11,15 +11,26 @@ public class IsolationWindow {
 	private boolean isDecoy;
 	private String compound;
 	private byte charge;
+	private String peptide;
 
 	
 	// Constructor
-	public IsolationWindow(double precursorMz, float rtInSecondsStart, float rtInSecondsStop, boolean isDecoy) {
+	public IsolationWindow(double precursorMz, float rtMin, float rtMax, boolean isDecoy) {
 		this.targetMz = precursorMz;
-		this.rtMin = rtInSecondsStart;
-		this.rtMax = rtInSecondsStop;
+		this.rtMin = rtMin;
+		this.rtMax = rtMax;
 		this.isDecoy = isDecoy;
 		}
+	
+	// Isolation window as mass list
+	public IsolationWindow(String peptide, double precursorMz, byte charge, float rtMin, float rtMax, boolean isDecoy) {
+		this.peptide = peptide;
+		this.targetMz = precursorMz;
+		this.charge = charge;
+		this.rtMin = rtMin;
+		this.rtMax = rtMax;
+		this.isDecoy = isDecoy;
+	}
 	
 	// Getters 
 	public double getTargetMz() {
@@ -60,6 +71,10 @@ public class IsolationWindow {
 
 	public byte getCharge() {
 		return charge;
+	}
+	
+	public String getPeptide() {
+		return peptide;
 	}
 
 }
