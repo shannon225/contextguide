@@ -2,7 +2,6 @@ package org.searlelab.contextguide.mprophet;
 
 import java.io.File;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetExecutionData;
-import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetReiter;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetResult;
 import edu.washington.gs.maccoss.encyclopedia.datastructures.SearchParameters;
 import edu.washington.gs.maccoss.encyclopedia.filereaders.SearchParameterParser;
