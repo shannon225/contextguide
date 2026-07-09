@@ -10,14 +10,14 @@ import org.searlelab.contextguide.mprophet.IsolationWindow;
 
 public class IsolationWindowReader {
 
-//	private static final String DELIM = "," || "\t"; 
-//	public static void main(String[] args) {
+	//	private static final String DELIM = "," || "\t"; 
+	//	public static void main(String[] args) {
 
 	//	String massListFile = "C:/Users/m334793/Documents/Library/assay7.csv";
 
-		//ArrayList<IsolationWindow> isolationWindows = parseMassList(massListFile);
-		
-		//System.out.println("Total windows read: " + isolationWindows.size());
+	//ArrayList<IsolationWindow> isolationWindows = parseMassList(massListFile);
+
+	//System.out.println("Total windows read: " + isolationWindows.size());
 
 	//}
 
@@ -28,26 +28,27 @@ public class IsolationWindowReader {
 		// Variables to fill in with the assay.csv entries
 		ArrayList<IsolationWindow> isolationWindows = new ArrayList<>();
 		File massList = new File(massListFile);
+		boolean hasPrintedDebugInfo = false;
+		boolean hasPrintedAddingPrecursor = false;
 
 		try (BufferedReader br = new BufferedReader(new FileReader(massList))) {
 			String delim = getDelimiter(massListFile);
-	
+
 			@SuppressWarnings("unused")
 			String header = br.readLine();
-			
+
 			String line;
 			while ((line = br.readLine()) != null) {
 
 				String[] columns = line.split(delim, -1);
-				
-				 boolean hasPrintedDebugInfo = false;
-				 if (!hasPrintedDebugInfo) {
-				        System.out.println("Line being read: " + line);
-				        System.out.println("Number of columns: " + columns.length);
-				        hasPrintedDebugInfo = true;
-				    }
 
-			//	String columns[] = line.split(DELIM, -1);
+				if (!hasPrintedDebugInfo) {
+					System.out.println("Line being read: " + line);
+					System.out.println("Number of columns: " + columns.length);
+					hasPrintedDebugInfo = true;
+				}
+
+				//	String columns[] = line.split(DELIM, -1);
 				System.out.println(line); // Console will print what the data looks like as its read in
 
 				String peptide = columns[0];
@@ -66,12 +67,12 @@ public class IsolationWindowReader {
 				// Assemble each window
 				IsolationWindow window = new IsolationWindow(peptide, targetMz, charge, rtMin, rtMax, isDecoy);
 				isolationWindows.add(window);
-				System.out.println("Adding an mz at " + targetMz + " and RT " + rtCenter + " min " + rtMin/60 + " max " + rtMax/60 
-//						+ "\nRTCenter: " + rtCenter
-//						+ "\ntargetMz: " + targetMz
-//						+ "\nrtStart: " + rtMin
-//						+ "\nrtStop: " + rtMax
-						);
+
+				if (!hasPrintedAddingPrecursor) {
+					System.out.println("Adding " + peptide + " with precursor at " + targetMz + " m/z, charge " + charge + ", RT " + rtCenter + " min " + rtMin/60 + " max " + rtMax/60 + " isDecoy = " + isDecoy);
+					hasPrintedAddingPrecursor = true;
+				} 
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -80,24 +81,25 @@ public class IsolationWindowReader {
 		return isolationWindows;
 
 	}
-	
+
+	// Detect the delim - Thermo Mass Lists are usually in .csv, but this program accepts .csv or .txt 
 	private static String getDelimiter(String filePath) {
-	    String lowerPath = filePath.toLowerCase();
+		String lowerPath = filePath.toLowerCase();
 
-	    if (lowerPath.endsWith(".csv")) {
-	        return ",";
-	    }
+		if (lowerPath.endsWith(".csv")) {
+			return ",";
+		}
 
-	    if (lowerPath.endsWith(".txt")) {
-	        return "\t";
-	    }
+		if (lowerPath.endsWith(".txt")) {
+			return "\t";
+		}
 
-	    if (lowerPath.endsWith(".tsv")) {
-	        return "\t";
-	    }
+		if (lowerPath.endsWith(".tsv")) {
+			return "\t";
+		}
 
-	    throw new IllegalArgumentException(
-	        "Mass list file must be a .csv or .tsv file: " + filePath
-	    );
+		throw new IllegalArgumentException(
+				"Mass list file must be a .csv or .tsv file: " + filePath
+				);
 	}
 }
