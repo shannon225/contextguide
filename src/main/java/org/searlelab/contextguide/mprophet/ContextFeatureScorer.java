@@ -30,7 +30,7 @@ import org.searlelab.context.encyclopedia.SearchToBLIB;
 
 public class ContextFeatureScorer {
 
-	public static void main(String[] args) throws IOException, SQLException, InterruptedException, DataFormatException {
+	public static void parseCLIForScoringFeatures(String[] args) throws IOException, SQLException, InterruptedException, DataFormatException {
 
 		if (args.length != 4) {
 			System.err.println("Usage: ");
@@ -50,6 +50,7 @@ public class ContextFeatureScorer {
 
 		try {
 			ArrayList<ScoredFeature> partitionedFeatures = scoreFeatures(library, rawFile, fasta, baseName, massListPath);
+			System.out.println("Features are scored and paritioned at " + partitionedFeatures.getLast());
 		} catch (Exception e) {
 			System.out.println("Something did not work... see the error tace");
 			e.printStackTrace();
@@ -76,10 +77,7 @@ public class ContextFeatureScorer {
 	private static String cleanPeptideSequence(String sequence) {
 		if (sequence == null) return "";
 
-		return sequence
-				.trim()
-				.replaceFirst("^[A-Za-z-]?\\.", "")
-				.replaceFirst("\\.[A-Za-z-]?$", "");
+		return sequence.trim().replaceFirst("^[A-Za-z-]?\\.", "").replaceFirst("\\.[A-Za-z-]?$", "");
 	}
 
 	private static void writeScoredFeatures(File outputFile, ArrayList<ScoredFeature> features, String header)
@@ -172,7 +170,7 @@ public class ContextFeatureScorer {
 		ArrayList<ScoredFeature> bestFeatures = new ArrayList<>(bestFeatureByPeptide.values());
 		bestFeatures.sort(Comparator.comparing(ScoredFeature::getPrimary).reversed());
 
-		System.out.println("Unique scored features have been found " + bestFeatures.size());
+		System.out.println("Selecting the betst feature per peptide..." + bestFeatures.size() + " peptides remain.");
 
 
 		// Output Paths
@@ -196,7 +194,7 @@ public class ContextFeatureScorer {
 			IsolationWindow matchingWindow = findMatchingMassListWindow(feature, targetWindows);
 
 			boolean isOnMassList = matchingWindow != null;
-			boolean isMassListDecoy = isOnMassList && matchingWindow.isDecoy();
+	//		boolean isMassListDecoy = isOnMassList && matchingWindow.isDecoy();
 			boolean isBackground = !isOnMassList;
 
 			ScoredFeature annotatedFeature = new ScoredFeature(feature.getMz(), feature.isDecoy(), feature.getPrimary(), feature.getRetentionTime(), cleanPeptideSequence(feature.getSequence()), feature.getProtein(), feature.getOriginalLine(), isBackground);

@@ -1,6 +1,9 @@
 package org.searlelab.contextguide.mprophet;
 
 import java.io.File;
+
+import org.searlelab.context.encyclopedia.MProphetReiter;
+
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetExecutionData;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetResult;
 import edu.washington.gs.maccoss.encyclopedia.datastructures.SearchParameters;
@@ -153,12 +156,7 @@ public class ContextMProphetExecutor {
 		File peptideOutputFile = new File(inputFeatureFile.getAbsolutePath().replaceAll("\\.txt$", "") + outputSuffix + ".output.txt");
 		File peptideDecoyFile = new File(inputFeatureFile.getAbsolutePath().replaceAll("\\.txt$", "") + outputSuffix + ".decoy.txt");
 
-		return new MProphetExecutionData(
-				inputFeatureFile,
-				fasta,
-				peptideOutputFile,
-				peptideDecoyFile,
-				params);
+		return new MProphetExecutionData(inputFeatureFile, fasta, peptideOutputFile, peptideDecoyFile, params);
 	}
 }
 

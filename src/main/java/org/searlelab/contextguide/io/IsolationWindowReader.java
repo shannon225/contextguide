@@ -10,17 +10,6 @@ import org.searlelab.contextguide.mprophet.IsolationWindow;
 
 public class IsolationWindowReader {
 
-	//	private static final String DELIM = "," || "\t"; 
-	//	public static void main(String[] args) {
-
-	//	String massListFile = "C:/Users/m334793/Documents/Library/assay7.csv";
-
-	//ArrayList<IsolationWindow> isolationWindows = parseMassList(massListFile);
-
-	//System.out.println("Total windows read: " + isolationWindows.size());
-
-	//}
-
 	// formatted as a mass list that is output when generating targeted assays with
 	// encyclopedia
 	public static ArrayList<IsolationWindow> parseMassList(String massListFile) {
@@ -43,24 +32,22 @@ public class IsolationWindowReader {
 				String[] columns = line.split(delim, -1);
 
 				if (!hasPrintedDebugInfo) {
-					System.out.println("Line being read: " + line);
-					System.out.println("Number of columns: " + columns.length);
+					// System.out.println("Line being read: " + line);
+					// System.out.println("Number of columns: " + columns.length);
 					hasPrintedDebugInfo = true;
 				}
 
-				//	String columns[] = line.split(DELIM, -1);
+				// String columns[] = line.split(DELIM, -1);
 				System.out.println(line); // Console will print what the data looks like as its read in
 
 				String peptide = columns[0];
-				// adduct = 1
-				// compound = 2
 				double targetMz = Double.parseDouble(columns[3]);
 				byte charge = Byte.parseByte(columns[4]);
 				float rtCenter = Float.parseFloat(columns[5]);
 				float rtWindow = Float.parseFloat(columns[6]);
 
-				float rtMin = (rtCenter - (rtWindow / 2))*60;
-				float rtMax = (rtCenter + (rtWindow / 2))*60;
+				float rtMin = (rtCenter - (rtWindow / 2)) * 60;
+				float rtMax = (rtCenter + (rtWindow / 2)) * 60;
 
 				boolean isDecoy = Boolean.parseBoolean(columns[7]);
 
@@ -69,9 +56,11 @@ public class IsolationWindowReader {
 				isolationWindows.add(window);
 
 				if (!hasPrintedAddingPrecursor) {
-					System.out.println("Adding " + peptide + " with precursor at " + targetMz + " m/z, charge " + charge + ", RT " + rtCenter + " min " + rtMin/60 + " max " + rtMax/60 + " isDecoy = " + isDecoy);
+					// System.out.println("Adding " + peptide + " with precursor at " + targetMz + "
+					// m/z, charge " + charge + ", RT " + rtCenter + " min " + rtMin/60 + " max " +
+					// rtMax/60 + " isDecoy = " + isDecoy);
 					hasPrintedAddingPrecursor = true;
-				} 
+				}
 
 			}
 		} catch (IOException e) {
@@ -82,7 +71,8 @@ public class IsolationWindowReader {
 
 	}
 
-	// Detect the delim - Thermo Mass Lists are usually in .csv, but this program accepts .csv or .txt 
+	// Detect the delim - Thermo Mass Lists are usually in .csv, but this program
+	// accepts .csv or .txt
 	private static String getDelimiter(String filePath) {
 		String lowerPath = filePath.toLowerCase();
 
@@ -99,7 +89,6 @@ public class IsolationWindowReader {
 		}
 
 		throw new IllegalArgumentException(
-				"Mass list file must be a .csv or .tsv file: " + filePath
-				);
+				"Error in reading Isolation Windows. Mass list file must be a .csv or .tsv file: " + filePath);
 	}
 }
