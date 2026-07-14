@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 public class TargetedBootstrapperCLI {
 	private static final int DEFAULT_MAX_SEED = 0;
-	private static final int DEFAULT_NUMBER_OF_PEPTIDES = 1;
+	private static final int DEFAULT_NUMBER_OF_PEPTIDES = 100;
 	private static final float DEFAULT_WINDOW_WIDTH_RT = 0.50f;
 	private static final double DEFAULT_HALF_WINDOW_WIDTH_MZ = 1.0;
 

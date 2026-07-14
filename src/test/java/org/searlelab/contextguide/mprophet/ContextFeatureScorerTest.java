@@ -15,7 +15,7 @@ public class ContextFeatureScorerTest {
 	@Test
 	public void smokeTest() throws Exception {
 		
-		URL rawFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_10kb.dia");
+		URL rawFileName = getClass().getClassLoader().getResource("20240416_P5_Neo_ES75150_10ngCurve_10perc_IL_10pep_PRM_2mz_60min_01.dia");
 		URL libraryFileName = getClass().getClassLoader().getResource("IL2_and_IL15_Combo.elib");
 		URL fastaFileName = getClass().getClassLoader().getResource("mus_musculus_reviewed_uniprot.fasta");
 		URL massListFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.txt");
@@ -41,7 +41,7 @@ public class ContextFeatureScorerTest {
 			ArrayList<ScoredFeature> partitionedFeatures = ContextFeatureScorer.scoreFeatures(library, rawFile, fasta, baseName, massListPath);
 			assertNotNull(partitionedFeatures);
 			
-			System.out.println("Last feature in the list: " + partitionedFeatures.getLast());
+			System.out.println("Last feature in the list: " + partitionedFeatures.getLast() + " peptides remaining.");
 			
 		//	ScoredFeature testFeature = ScoredFeature();
 	//		assertEquals(partitionedFeatures.getLast(), );
