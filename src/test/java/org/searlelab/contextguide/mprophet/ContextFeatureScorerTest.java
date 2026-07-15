@@ -3,55 +3,65 @@ package org.searlelab.contextguide.mprophet;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import org.junit.Rule;
 import org.junit.Test;
-import org.searlelab.contextguide.mprophet.ContextFeatureScorer;
+import org.junit.rules.TemporaryFolder;
 
 public class ContextFeatureScorerTest {
-// TODO This test is too long. It processes a whole file. Make this test run more quickly by reducing of features in the file to 10 
+
+	@Rule
+	public TemporaryFolder tempFolder = TemporaryFolder.builder().assureDeletion().build();
+	
 	@Test
 	public void smokeTest() throws Exception {
+		// This tests if the ContextFeatureScorer can find the correct files and return scored features 
 		
-		URL rawFileName = getClass().getClassLoader().getResource("20240416_P5_Neo_ES75150_10ngCurve_10perc_IL_10pep_PRM_2mz_60min_01.dia");
+		// Locate the files for the test	
+		URL rawFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.dia");
 		URL libraryFileName = getClass().getClassLoader().getResource("IL2_and_IL15_Combo.elib");
 		URL fastaFileName = getClass().getClassLoader().getResource("mus_musculus_reviewed_uniprot.fasta");
 		URL massListFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.txt");
 
-		String rawFilePath = Paths.get(rawFileName.toURI()).toString();
-		String libraryFilePath = Paths.get(libraryFileName.toURI()).toString();
-		String fastaFilePath = Paths.get(fastaFileName.toURI()).toString();
+		// These files must exist for the test to pass
+		assertNotNull("DIA file was not found.", rawFileName);
+		assertNotNull("Library was not found.", libraryFileName);
+		assertNotNull("Fasta was not found.", fastaFileName);
+		assertNotNull("Mass list was not found", massListFileName);
+		
+		// Copy the files to the temporary directory
+
+		Path rawFilePath = Paths.get(rawFileName.toURI());
+		Path libraryFilePath = Paths.get(libraryFileName.toURI());
+		Path fastaFilePath = Paths.get(fastaFileName.toURI());
+		
 		String massListPath = Paths.get(massListFileName.toURI()).toString();
 
+		File rawFile = rawFilePath.toFile(); 
+		File library = libraryFilePath.toFile();
+		File fasta = fastaFilePath.toFile();
 		
-		
-//		String rawFilePath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_5min/IL2A_GPFDIA_0combined_Masked0_assay.dia";
-//		String libraryFilePath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_5min/IL2_and_IL15_Combo.elib";
-//		String fastaPath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_5min/mus_musculus_reviewed_uniprot.fasta";
-//		String massListPath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_5min/IL2A_GPFDIA_0combined_masked0_assay.txt";
+		String baseName = rawFile.toString().replaceFirst("\\.dia$", "");
 
-		String baseName = rawFilePath.replaceFirst("\\.dia$", "");
-		final File fasta = new File(fastaFilePath);
-		File rawFile = new File(rawFilePath);
-		File library = new File(libraryFilePath);
-
-		try {			
 			ArrayList<ScoredFeature> partitionedFeatures = ContextFeatureScorer.scoreFeatures(library, rawFile, fasta, baseName, massListPath);
 			assertNotNull(partitionedFeatures);
 			
 			System.out.println("Last feature in the list: " + partitionedFeatures.getLast() + " peptides remaining.");
 			
-		//	ScoredFeature testFeature = ScoredFeature();
-	//		assertEquals(partitionedFeatures.getLast(), );
-		} catch (Exception e) {
-			System.out.println("Something did not work when trying to score features... see the error tace");
-			e.printStackTrace();
-		} finally {
-		System.out.println("Features have been scored.");
+			// Verify that the expected output files were created
+		Path referenceOutput = Paths.get(baseName + "_reference.features.txt");
+		Path backgroundOutput = Paths.get(baseName + "_background.features.txt");
 		
-		}
+		assertTrue("Reference feature file was not created.", Files.exists(referenceOutput));
+		assertTrue("Background feature file was not created.", Files.exists(backgroundOutput));
+		
+		System.out.println(partitionedFeatures.size() + " paritioned features were returned.");
+		
 		
 
 		}
