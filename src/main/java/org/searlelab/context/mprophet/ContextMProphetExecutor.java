@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.mprophet;
+package org.searlelab.context.mprophet;
 
 import java.io.File;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.percolator.MProphetExecutionData;

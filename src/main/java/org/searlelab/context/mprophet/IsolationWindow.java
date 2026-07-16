@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.mprophet;
+package org.searlelab.context.mprophet;
 
 public class IsolationWindow {
 	private double targetMz;
