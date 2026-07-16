@@ -13,8 +13,9 @@ import java.util.HashMap;
 import java.util.zip.DataFormatException;
 
 import org.searlelab.context.io.IsolationWindowReader;
+import org.searlelab.context.encyclopedia.EncyclopediaTwo;
 
-import edu.washington.gs.maccoss.encyclopedia.EncyclopediaTwo;
+//import edu.washington.gs.maccoss.encyclopedia.EncyclopediaTwo;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.EncyclopediaScoringFactory;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.EncyclopediaTwoJobData;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.LibraryScoringFactory;
@@ -27,6 +28,7 @@ import edu.washington.gs.maccoss.encyclopedia.utils.threading.EmptyProgressIndic
 import edu.washington.gs.maccoss.encyclopedia.utils.threading.ProgressIndicator;
 
 import org.searlelab.msrawjava.io.StripeFileInterface;
+
 public class ContextFeatureScorer {
 
 	public static void main(String[] args) throws IOException, SQLException, InterruptedException, DataFormatException {
@@ -123,8 +125,7 @@ public class ContextFeatureScorer {
 			System.out.println(featuresToSplit.getAbsolutePath());
 		} else {
 			System.out.println("Calculating features...");
-			EncyclopediaTwo.generateFeatureFile(progress, interfaceForLibrary, job,
-					interfaceForStripeFile, java.util.Optional.empty());
+			EncyclopediaTwo.generateFeatureFile(progress, interfaceForLibrary, job, interfaceForStripeFile, java.util.Optional.empty());
 		}
 
 		ArrayList<ScoredFeature> uniqueFeatures = new ArrayList<>();
