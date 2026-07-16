@@ -6,11 +6,6 @@ target/
 .project
 .settings/
 
-# Packaged Java artifacts
-*.jar
-*.war
-*.ear
-
 # Eclipse / Java temporary files
 *.tmp
 *.bak
