@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.mprophet;
+package org.searlelab.context.mprophet;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,8 +12,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.zip.DataFormatException;
 
-import org.searlelab.contextguide.io.IsolationWindowReader;
-
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.EncyclopediaScoringFactory;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.EncyclopediaTwoJobData;
 import edu.washington.gs.maccoss.encyclopedia.algorithms.library.LibraryScoringFactory;
@@ -25,6 +23,7 @@ import edu.washington.gs.maccoss.encyclopedia.utils.threading.EmptyProgressIndic
 import edu.washington.gs.maccoss.encyclopedia.utils.threading.ProgressIndicator;
 
 import org.searlelab.context.encyclopedia.EncyclopediaTwo;
+import org.searlelab.context.io.IsolationWindowReader;
 
 public class ContextFeatureScorer {
 

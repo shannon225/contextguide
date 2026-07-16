@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.io;
+package org.searlelab.context.io;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.searlelab.contextguide.mprophet.IsolationWindow;
+import org.searlelab.context.mprophet.IsolationWindow;
 
 public class IsolationWindowReader {
 

@@ -6,8 +6,9 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.searlelab.contextguide.mprophet.IsolationWindow;
 import org.junit.Test;
+import org.searlelab.context.io.IsolationWindowReader;
+import org.searlelab.context.mprophet.IsolationWindow;
 
 public class IsolationWindowReaderTest {
 

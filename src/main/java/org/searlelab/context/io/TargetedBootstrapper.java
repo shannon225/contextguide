@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.io;
+package org.searlelab.context.io;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
-import org.searlelab.contextguide.mprophet.IsolationWindow;
-
 import edu.washington.gs.maccoss.encyclopedia.datastructures.AminoAcidConstants;
 import edu.washington.gs.maccoss.encyclopedia.datastructures.LibraryEntry;
 import edu.washington.gs.maccoss.encyclopedia.datastructures.SearchParameters;
@@ -26,6 +24,7 @@ import org.searlelab.msrawjava.model.FragmentScan;
 import org.searlelab.msrawjava.model.PrecursorScan;
 import org.searlelab.msrawjava.model.Range;
 import org.searlelab.msrawjava.model.WindowData;
+import org.searlelab.context.mprophet.IsolationWindow;
 import org.searlelab.msrawjava.io.encyclopedia.EncyclopeDIAFile;
 
 public class TargetedBootstrapper {

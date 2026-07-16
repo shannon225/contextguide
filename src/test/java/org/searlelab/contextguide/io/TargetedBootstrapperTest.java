@@ -10,6 +10,7 @@ import java.util.Objects;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
+import org.searlelab.context.io.TargetedBootstrapper;
 
 public class TargetedBootstrapperTest {
 
