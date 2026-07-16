@@ -19,7 +19,7 @@ public class ContextFeatureScorerTest {
 	public TemporaryFolder tempFolder = TemporaryFolder.builder().assureDeletion().build();
 	
 	@Test
-	public void smokeTest() throws Exception {
+	public void test() throws Exception {
 		// This tests if the ContextFeatureScorer can find the correct files and return scored features 
 		
 		// Locate the files for the test	
@@ -29,10 +29,10 @@ public class ContextFeatureScorerTest {
 		URL massListFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.txt");
 
 		// These files must exist for the test to pass
-		assertNotNull("DIA file was not found.", rawFileName);
-		assertNotNull("Library was not found.", libraryFileName);
-		assertNotNull("Fasta was not found.", fastaFileName);
-		assertNotNull("Mass list was not found", massListFileName);
+		assertNotNull("DIA file was not found. ", rawFileName);
+		assertNotNull("Library was not found. ", libraryFileName);
+		assertNotNull("Fasta was not found. ", fastaFileName);
+		assertNotNull("Mass list was not found. ", massListFileName);
 		
 		// Copy the files to the temporary directory
 
@@ -61,7 +61,8 @@ public class ContextFeatureScorerTest {
 		assertTrue("Background feature file was not created.", Files.exists(backgroundOutput));
 		
 		System.out.println(partitionedFeatures.size() + " paritioned features were returned.");
-		
+		int featuresSize = 17;
+		assertTrue(partitionedFeatures.size()==featuresSize);
 		
 
 		}
