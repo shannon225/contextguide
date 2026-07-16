@@ -89,8 +89,6 @@ public class TargetedBootstrapper {
 				int index = Math.abs(randomValue) % entries.size();
 				simulatedAssaySet.add(index);
 			}
-			// System.out.println("Selecting " + simulatedAssaySet.size() + " precursors for
-			// a fake assay.");
 
 			for (Integer index : simulatedAssaySet) {
 

@@ -109,8 +109,7 @@ public class ContextFeatureScorer {
 		LibraryScoringFactory scoringForLibrary = EncyclopediaScoringFactory.getDefaultScoringFactory(params);
 		LibraryInterface interfaceForLibrary = BlibToLibraryConverter.getFile(library, fasta, params);
 
-		EncyclopediaTwoJobData job = new EncyclopediaTwoJobData(rawFile, fasta, interfaceForLibrary,
-				interfaceForLibrary, rawFile, scoringForLibrary);
+		EncyclopediaTwoJobData job = new EncyclopediaTwoJobData(rawFile, fasta, interfaceForLibrary, interfaceForLibrary, rawFile, scoringForLibrary);
 
 		ProgressIndicator progress = new EmptyProgressIndicator(true);
 		org.searlelab.msrawjava.io.StripeFileInterface interfaceForStripeFile = job.getDiaFileReader();
