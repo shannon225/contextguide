@@ -1,33 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>searlelab</groupId>
-  <artifactId>context</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  
-  <name>context</name>
-  <dependencies>
-  	<dependency>
-  		<groupId>maccoss</groupId>
-  		<artifactId>encyclopedia</artifactId>
-  		<version>6.6.24</version>
-  	</dependency>
-	<dependency>
-			<groupId>org.searlelab</groupId>
-			<artifactId>jchronologer</artifactId>
-			<version>1.0.9</version>
-		</dependency>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.searlelab</groupId>
+	<artifactId>context</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+
+	<name>context</name>
+
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<dependencies>
 		<dependency>
-			<groupId>org.searlelab</groupId>
-			<artifactId>javapot</artifactId>
-			<version>1.0.5</version>
+			<groupId>maccoss</groupId>
+			<artifactId>encyclopedia</artifactId>
+			<version>6.6.24</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.searlelab</groupId>
 			<artifactId>msrawjava-core</artifactId>
 			<version>26.7.1</version>
 		</dependency>
-  </dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
