@@ -21,6 +21,15 @@ public class IsolationWindow {
 		this.isDecoy = isDecoy;
 		}
 	
+	public IsolationWindow(String compound, double precursorMz, byte charge, float rtMin, float rtMax, boolean isDecoy) {
+		this.compound = compound;
+		this.targetMz = precursorMz;
+		this.charge = charge;
+		this.rtMin = rtMin;
+		this.rtMax = rtMax;
+		this.isDecoy = isDecoy;
+	}
+
 	// Getters 
 	public double getTargetMz() {
 		return targetMz;
