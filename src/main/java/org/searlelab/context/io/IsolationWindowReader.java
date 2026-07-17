@@ -29,8 +29,13 @@ public class IsolationWindowReader {
 			String line;
 			while ((line = br.readLine()) != null) {
 				String columns[] = line.split(delim, -1); // identify the format of the mass list
-	
-				System.out.println("Added another line " + line); // Console will print what the data looks like as its read in
+				
+				// Loop so that the message is only printed once
+				if (!hasPrintedDebugInfo) {
+					System.out.println("Reading in the window:  " + line); // Console will print what the data looks like as its read in
+
+					hasPrintedDebugInfo = true;
+				}
 				
 				String peptide = columns[0];  // read columns in as primitives
 				double targetMz = Double.parseDouble(columns[3]);
@@ -46,12 +51,12 @@ public class IsolationWindowReader {
 				// Assemble each window
 				IsolationWindow window = new IsolationWindow(peptide, targetMz, charge, rtMin, rtMax, isDecoy);
 				isolationWindows.add(window);
-				System.out.println("Adding an mz at " + targetMz + " and RT " + rtCenter + " min " + rtMin/60 + " max " + rtMax/60 
-//						+ "\nRTCenter: " + rtCenter
-//						+ "\ntargetMz: " + targetMz
-//						+ "\nrtStart: " + rtMin
-//						+ "\nrtStop: " + rtMax
-						);
+				
+				if (!hasPrintedAddingPrecursorInfo) {
+					hasPrintedAddingPrecursorInfo = true;
+					System.out.println("Adding an mz at " + targetMz + " and RT " + rtCenter + " min " + rtMin/60 + " max " + rtMax/60 );
+
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

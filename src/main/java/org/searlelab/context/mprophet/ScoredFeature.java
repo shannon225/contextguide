@@ -43,8 +43,6 @@ public class ScoredFeature {
 		this.sequence=sequence;
 		this.protein=protein;
 		this.originalLine=originalLine;
-		this.isBackground=isBackground; 
-
 	}
 
 
