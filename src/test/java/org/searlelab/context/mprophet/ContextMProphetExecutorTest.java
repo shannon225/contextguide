@@ -3,65 +3,73 @@ package org.searlelab.context.mprophet;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.searlelab.context.mprophet.ContextMProphetExecutor;
 
+import com.google.common.io.Files;
 
 public class ContextMProphetExecutorTest {
 
-	@Test
+	@Rule 
+	public TemporaryFolder tempFolder = TemporaryFolder.builder().assureDeletion().build();
 	
-	public void test() {
+	
+	
+	@Test
+	public void test() throws Throwable {
 
 		// Map files 
-		String libraryPath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_1min/IL2_and_IL15_Combo.elib";
-		String fastaPath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_1min/mus_musculus_reviewed_uniprot.fasta";
+		URL libraryFileName = getClass().getClassLoader().getResource("IL2_and_IL15_Combo.elib");
+		URL fastaFileName = getClass().getClassLoader().getResource("mus_musculus_reviewed_uniprot.fasta");
 
 		// Where the feature files are located: 
-		String diaFolderPath = "C:/Users/m334793/Documents/asms2026/stellar/2mz_1min/";
+		URL diaFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.dia");
+		URL massListName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.txt");
 
-		// Get a list of .dia files 
-		File diaFolder = new File(diaFolderPath);
-		File[] diaFiles = diaFolder.listFiles();
+		// Are all the paths mapped to real files? 
+		assertNotNull("Library was not found. ", libraryFileName);
+		assertNotNull("Fasta was not found. ", fastaFileName);
+		assertNotNull("DIA file was not found. ", diaFileName);
+		assertNotNull("Mass list was not found. ", massListName);
 
-		System.out.println("DIA Folder was identified as: " + diaFolder.getAbsolutePath());
-		System.out.println("DIA files detected! The following files will be processed with MProphet:" + diaFolder.listFiles());
+		Path libraryPath = Paths.get(libraryFileName.toURI());
+		Path fastaPath = Paths.get(fastaFileName.toURI());
+		Path diaPath = Paths.get(diaFileName.toURI());
+		Path massListPath = Paths.get(massListName.toURI());
+		
+		File copiedLibraryFile =   new File(tempFolder.getRoot(), libraryPath.getFileName().toString());
+		Files.copy(libraryPath.toFile(), copiedLibraryFile);
+		
+		File diaFile = diaPath.toFile();
+		//		File[] diaFiles = diaFolder.listFiles();
 
-		if (diaFiles != null) {
-			for (File diaFile : diaFiles) {
-				if (diaFile.isFile() && diaFile.getName().endsWith(".dia")) {
-					System.out.println(diaFile.getName());
-				}
-			}
+		//		System.out.println("DIA Folder was identified as: " + diaFolder.getAbsolutePath());
+		//		System.out.println("DIA files detected! The following files will be processed with MProphet:" + diaFolder.listFiles());
+
+
+		// Ignore files that do not end in .dia 
+		if (!diaFile.isFile() && !diaFile.getName().endsWith(".dia")) {
+			
+		String diaName = diaFile.getName(); 
+		String baseName = diaName.substring(0, diaName.lastIndexOf(".dia"));
+
+		File massListFile = new File(diaFile, baseName + ".txt");
+
+		System.out.println("Processessing " + diaFile.getName());
+
+		if (!massListFile.exists()) {
+			System.out.println("Skipping " + diaFile.getName() + " because mass list was not found: " + massListPath);
+			
 		}
-
-		// Identify the current file so we can loop through all files
-
-		if (diaFiles !=null) {
-			for (File diaFile : diaFiles) {
-
-				// Ignore files that do not end in .dia 
-				if (!diaFile.isFile() || !diaFile.getName().endsWith(".dia")) {
-					continue;
-				}
-
-				String currentDiaFilePath = diaFile.getAbsolutePath();
-				String diaName = diaFile.getName(); 
-				String baseName = diaName.substring(0, diaName.lastIndexOf(".dia"));
-
-				File massListFile = new File(diaFolder, baseName + ".txt");
-				String massListPath = massListFile.getAbsolutePath();
-
-				System.out.println("Processesing " + diaFile.getName());
-
-				if (!massListFile.exists()) {
-					System.out.println("Skipping " + diaFile.getName() + " because mass list was not found: " + massListPath);
-					continue;
-				}
-				executeContextMProphet(libraryPath, fastaPath, currentDiaFilePath, massListPath, diaFolder);
-			}	
-		}
-	}
-
+		ContextMProphetExecutor.executeContextMProphet(libraryPath.toString(), fastaPath.toString(), diaPath.toString(), massListPath.toString());
+	}	
 }
+	
+}
+

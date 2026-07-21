@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.io;
+package org.searlelab.context.io;
 
 import static org.junit.Assert.*;
 

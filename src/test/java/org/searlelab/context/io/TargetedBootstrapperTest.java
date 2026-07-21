@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.io;
+package org.searlelab.context.io;
 
 import java.net.URL;
 import java.nio.file.Files;

@@ -1,4 +1,4 @@
-package org.searlelab.contextguide.mprophet;
+package org.searlelab.context.mprophet;
 
 import static org.junit.Assert.*;
 
