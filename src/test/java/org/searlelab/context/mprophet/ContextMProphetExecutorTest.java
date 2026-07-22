@@ -23,12 +23,12 @@ public class ContextMProphetExecutorTest {
 	
 	@Test
 	public void test() throws Throwable {
+		
+		System.out.println("Running ContextMProphetExecutorTest.");
 
-		// Map files 
+		// Locate resources
 		URL libraryFileName = getClass().getClassLoader().getResource("IL2_and_IL15_Combo.elib");
 		URL fastaFileName = getClass().getClassLoader().getResource("mus_musculus_reviewed_uniprot.fasta");
-
-		// Where the feature files are located: 
 		URL diaFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.dia");
 		URL massListName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.txt");
 
@@ -37,39 +37,38 @@ public class ContextMProphetExecutorTest {
 		assertNotNull("Fasta was not found. ", fastaFileName);
 		assertNotNull("DIA file was not found. ", diaFileName);
 		assertNotNull("Mass list was not found. ", massListName);
-
+		
+		// Convert URLs to Paths
 		Path libraryPath = Paths.get(libraryFileName.toURI());
 		Path fastaPath = Paths.get(fastaFileName.toURI());
 		Path diaPath = Paths.get(diaFileName.toURI());
 		Path massListPath = Paths.get(massListName.toURI());
 		
-		File copiedLibraryFile =   new File(tempFolder.getRoot(), libraryPath.getFileName().toString());
-		Files.copy(libraryPath.toFile(), copiedLibraryFile);
+		// Temporary directory 
+		File tempDirectory = tempFolder.newFolder("context-mprophet-test");
 		
-		File diaFile = diaPath.toFile();
-		//		File[] diaFiles = diaFolder.listFiles();
-
-		//		System.out.println("DIA Folder was identified as: " + diaFolder.getAbsolutePath());
-		//		System.out.println("DIA files detected! The following files will be processed with MProphet:" + diaFolder.listFiles());
-
-
-		// Ignore files that do not end in .dia 
-		if (!diaFile.isFile() && !diaFile.getName().endsWith(".dia")) {
-			
-		String diaName = diaFile.getName(); 
-		String baseName = diaName.substring(0, diaName.lastIndexOf(".dia"));
-
-		File massListFile = new File(diaFile, baseName + ".txt");
-
+		// Copy files into temp directory 
+		File diaFile = new File(tempDirectory, diaPath.getFileName().toString());
+		File library = new File(tempDirectory, libraryPath.getFileName().toString());
+		File fasta = new File(tempDirectory, fastaPath.getFileName().toString());
+		File massList = new File(tempDirectory, massListPath.getFileName().toString());
+		
+		Files.copy(diaPath.toFile(), tempDirectory);
+		Files.copy(libraryPath.toFile(), tempDirectory);
+		Files.copy(fastaPath.toFile(), tempDirectory);
+		Files.copy(massListPath.toFile(), tempDirectory);
+		
+		// Ensure they were copied
+		assertTrue("DIA file was not copied.", diaFile.isFile());
+		assertTrue("Library file was not copied.", library.isFile());
+		assertTrue("Fasta file was not copied.", fasta.isFile());
+		assertTrue("Mass list file was not copied", massList.isFile());
+		
+	
 		System.out.println("Processessing " + diaFile.getName());
 
-		if (!massListFile.exists()) {
-			System.out.println("Skipping " + diaFile.getName() + " because mass list was not found: " + massListPath);
-			
-		}
-		ContextMProphetExecutor.executeContextMProphet(libraryPath.toString(), fastaPath.toString(), diaPath.toString(), massListPath.toString());
+		ContextMProphetExecutor.executeContextMProphet(library.getAbsolutePath(), fasta.getAbsolutePath(), diaFile.getAbsolutePath(), massList.getAbsolutePath());
 	}	
 }
 	
-}
 
