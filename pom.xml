@@ -21,6 +21,16 @@
 			<groupId>maccoss</groupId>
 			<artifactId>encyclopedia</artifactId>
 			<version>6.6.24</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.searlelab</groupId>
+					<artifactId>jchronologer</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.searlelab</groupId>
+					<artifactId>javapot</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.searlelab</groupId>

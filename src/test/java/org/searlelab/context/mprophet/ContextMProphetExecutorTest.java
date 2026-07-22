@@ -10,8 +10,6 @@ import java.nio.file.Paths;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.searlelab.context.mprophet.ContextMProphetExecutor;
-
 import com.google.common.io.Files;
 
 public class ContextMProphetExecutorTest {
@@ -27,10 +25,10 @@ public class ContextMProphetExecutorTest {
 		System.out.println("Running ContextMProphetExecutorTest.");
 
 		// Locate resources
-		URL libraryFileName = getClass().getClassLoader().getResource("IL2_and_IL15_Combo.elib");
-		URL fastaFileName = getClass().getClassLoader().getResource("mus_musculus_reviewed_uniprot.fasta");
-		URL diaFileName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.dia");
-		URL massListName = getClass().getClassLoader().getResource("IL2A_GPFDIA_0combined_masked0_assay.txt");
+		URL libraryFileName = getClass().getClassLoader().getResource("org/searlelab/context/mprophet/IL2_and_IL15_Combo.elib");
+		URL fastaFileName = getClass().getClassLoader().getResource("org/searlelab/context/mprophet/mus_musculus_reviewed_uniprot.fasta");
+		URL diaFileName = getClass().getClassLoader().getResource("org/searlelab/context/mprophet/IL2A_GPFDIA_0combined_masked0_assay.dia");
+		URL massListName = getClass().getClassLoader().getResource("org/searlelab/context/mprophet/IL2A_GPFDIA_0combined_masked0_assay.txt");
 
 		// Are all the paths mapped to real files? 
 		assertNotNull("Library was not found. ", libraryFileName);
@@ -53,10 +51,10 @@ public class ContextMProphetExecutorTest {
 		File fasta = new File(tempDirectory, fastaPath.getFileName().toString());
 		File massList = new File(tempDirectory, massListPath.getFileName().toString());
 		
-		Files.copy(diaPath.toFile(), tempDirectory);
-		Files.copy(libraryPath.toFile(), tempDirectory);
-		Files.copy(fastaPath.toFile(), tempDirectory);
-		Files.copy(massListPath.toFile(), tempDirectory);
+		Files.copy(diaPath.toFile(), diaFile);
+		Files.copy(libraryPath.toFile(), library);
+		Files.copy(fastaPath.toFile(), fasta);
+		Files.copy(massListPath.toFile(), massList);
 		
 		// Ensure they were copied
 		assertTrue("DIA file was not copied.", diaFile.isFile());
@@ -66,8 +64,12 @@ public class ContextMProphetExecutorTest {
 		
 	
 		System.out.println("Processessing " + diaFile.getName());
-
+		
+		File expectedOutput = new File(tempDirectory, "IL2A_GPFDIA_0combined_masked0_assay_reference.features.pep.output.txt");
+		
 		ContextMProphetExecutor.executeContextMProphet(library.getAbsolutePath(), fasta.getAbsolutePath(), diaFile.getAbsolutePath(), massList.getAbsolutePath());
+		
+		assertTrue("Expected output file was not generated: " + expectedOutput, expectedOutput.isFile());
 	}	
 }
 	
